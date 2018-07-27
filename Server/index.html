@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html>
+   <head>
+      <title>Western Town</title>
+   </head>
+   
+   <script src = "/socket.io/socket.io.js"></script>
+   <script>
+      var socket = io();
+      function setUsername() {
+         socket.emit('setGameSetup', 
+         { 'playerName': document.getElementById('name').value });
+      };
+      var user;
+      socket.on('gameInit', function(data) {
+         console.log(JSON.stringify(data));
+      });
+      socket.on('playerExists', function(data) {
+         document.getElementById('error-container').innerHTML = data;
+      });
+      socket.on('userSet', function(data) {
+         user = data.username;
+         document.body.innerHTML = '<input type = "text" id = "message">\
+         <button type = "button" name = "button" onclick = "sendMessage()">Send</button>';
+      });
+      function sendMessage() {
+         var msg = document.getElementById('message').value;
+         if(msg) {
+            socket.emit('sendRoomChat', {message: msg, playerName: user});
+            document.getElementById('message').value = '';
+         }
+      }
+      socket.on('msgChatRoom', function(data) {
+         if (user) {
+            document.getElementById('message-container').innerHTML += '<div><b>' + 
+               data.playerName + '</b>: ' + data.message + '</div>'
+         }
+         console.log ('MESSAGE RECEIVE ' + JSON.stringify(data));
+      })
+      function GetRoomsStatus() {
+            socket.emit('getRoomsStatus');
+      }
+      function JoinOrCreateRoom(roomName) {
+            socket.emit('joinOrCreateRoom', { roomName: roomName });
+      }
+      function LeaveRoom() {
+            socket.emit('leaveRoom');
+      }
+      function SendChat(msg) {
+            socket.emit('sendRoomChat', { message: msg });
+      }
+      function SendUseCard(index) {
+            socket.emit('useCard', { cardIndex: index });
+      }
+      function SendDrawACard() {
+            socket.emit('drawACard');
+      }
+      socket.on('updateRoomStatus', function(data) {
+            console.log (JSON.stringify(data));
+      });
+      socket.on('newJoinRoom', function(data) {
+            console.log ('newJoinRoom ' + JSON.stringify(data));
+      });
+      socket.on('joinRoomFailed', function(data) {
+            console.log (JSON.stringify(data));
+      });
+      socket.on('newLeaveRoom', function(data) {
+            console.log ('newLeaveRoom ' + JSON.stringify(data));
+      });
+      socket.on('clearRoom', function(data) {
+            console.log ("Room is clear ... ");
+      });
+      socket.on('enterGame', function(data) {
+            console.log ("enterGame " + JSON.stringify(data));
+      });
+      socket.on('updatePlayer', function(data) {
+            console.log ("updatePlayer " + JSON.stringify(data));
+      });
+      socket.on('updateTurn', function(data) {
+            console.log ("updateTurn " + JSON.stringify(data));
+      });
+      socket.on('explosionPlayer', function(data) {
+            console.log ("explosionPlayer " + JSON.stringify(data));
+      });
+      socket.on('messageError', function(data) {
+            console.log ("messageError " + JSON.stringify(data));
+      });
+      socket.on('beep', function(data) {
+            console.log ("beep");
+      });
+      setInterval(function(){
+            socket.emit("beep");
+      }, 1000);
+   </script>
+   <body>
+      <div id = "error-container"></div>
+      <input id = "name" type = "text" name = "name" value = "" 
+         placeholder = "Enter your name!" />
+      </br>
+      <button type = "button" name = "button" onclick = "setUsername()">
+         Submit name
+      </button>
+      <button type = "button" name = "button" onclick = "GetRoomsStatus()">
+            Get rooms status
+      </button>
+      <button type = "button" name = "button" onclick = "JoinOrCreateRoom('room-1')">
+            Join room 1
+      </button>
+      <button type = "button" name = "button" onclick = "JoinOrCreateRoom('room-2')">
+            Join room 2
+      </button>
+      <button type = "button" name = "button" onclick = "JoinOrCreateRoom('room-3')">
+            Join room 3
+      </button>
+      <button type = "button" name = "button" onclick = "LeaveRoom()">
+            Leave room
+      </button>
+      </br>
+      <button type = "button" name = "button" onclick = "SendDrawACard()">
+            On draw a card
+      </button>
+      <button type = "button" name = "button" onclick = "SendUseCard(0)">
+            On use first card
+      </button>
+      </br>
+      <button type = "button" name = "button" onclick = "SendChat('This is chat message !!!')">
+            On chat
+      </button>
+   </body>
+</html>
