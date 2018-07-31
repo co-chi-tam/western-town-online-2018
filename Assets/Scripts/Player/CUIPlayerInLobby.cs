@@ -8,6 +8,7 @@ public class CUIPlayerInLobby : MonoBehaviour {
 
 	[SerializeField]	protected Text m_UIName;
 	[SerializeField]	protected Image m_Icon;
+	[SerializeField]	protected GameObject m_IsOwnerPlayer;
 	[SerializeField]	protected Button m_SubmitButton;
 
 	[SerializeField]	protected CPlayerData m_CurrentData;
@@ -16,13 +17,15 @@ public class CUIPlayerInLobby : MonoBehaviour {
 		set { this.m_CurrentData = new CPlayerData (value); }
 	}
 
-	public virtual void SetupItem(CPlayerData value, string name, Sprite icon, UnityAction callback) {
+	public virtual void SetupItem(CPlayerData value, string name, Sprite icon, bool isOwner, UnityAction callback) {
 		// INDEX
 		this.currentData = value;
 		// JOB NAME
 		this.m_UIName.text = name;
 		// JOB ICON
 		this.m_Icon.sprite = icon;
+
+		this.m_IsOwnerPlayer.SetActive(isOwner);
 		// SUBMIT
 		if (this.m_SubmitButton != null && callback != null) {
 			this.m_SubmitButton.onClick.RemoveAllListeners();

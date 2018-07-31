@@ -37,11 +37,12 @@ public class CLobbyScene : MonoBehaviour {
 			var playerData = players[i];
 			var playerName = playerData.name;
 			var playerIcon = this.m_PlayerIcons [playerData.icon];
+			var isOwner    = playerData.isOwner;
 			playerUI.transform.SetParent (this.m_PlayersRoot.transform);
 			playerUI.transform.localScale = Vector3.one;
 			playerUI.gameObject.SetActive (true);
 			playerUI.name = playerName;
-			playerUI.SetupItem(playerData, playerName, playerIcon, null);
+			playerUI.SetupItem(playerData, playerName, playerIcon, isOwner, null);
 		}
 	}
 

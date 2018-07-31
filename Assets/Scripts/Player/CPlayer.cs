@@ -689,4 +689,26 @@ public class CPlayer : CMonoSingleton<CPlayer> {
 
 	#endregion
 
+	#region Utilities
+
+	private bool ActionComparer<T>(Action<T> firstAction, Action<T> secondAction) {
+		if(firstAction.Target != secondAction.Target)
+			return false;
+
+		var firstMethodBody = firstAction.Method.GetMethodBody().GetILAsByteArray();
+		var secondMethodBody = secondAction.Method.GetMethodBody().GetILAsByteArray();
+
+		if(firstMethodBody.Length != secondMethodBody.Length)
+			return false;
+
+		for(var i = 0; i < firstMethodBody.Length; i++)
+		{
+			if(firstMethodBody[i] != secondMethodBody[i])
+				return false;
+		}
+		return true;
+	}
+
+	#endregion
+
 }

@@ -1,0 +1,15 @@
+﻿<Properties StartupItem="Assembly-CSharp.csproj">
+  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" PreferredExecutionTarget="Unity.Instance.Unity Editor" />
+  <MonoDevelop.Ide.Workbench ActiveDocument="Assets\Scripts\Common\CSwitchScene.cs">
+    <Files>
+      <File FileName="Assets\Scripts\Scene\CPlayWesternTownScene.cs" Line="172" Column="6" />
+      <File FileName="Assets\Scripts\Player\CPlayer.cs" Line="1" Column="1" />
+      <File FileName="Assets\Scripts\Bomb\CUIBomb.cs" Line="1" Column="1" />
+      <File FileName="Assets\Scripts\Common\CSwitchScene.cs" Line="1" Column="1" />
+    </Files>
+  </MonoDevelop.Ide.Workbench>
+  <MonoDevelop.Ide.DebuggingService.Breakpoints>
+    <BreakpointStore />
+  </MonoDevelop.Ide.DebuggingService.Breakpoints>
+  <MonoDevelop.Ide.DebuggingService.PinnedWatches />
+</Properties>

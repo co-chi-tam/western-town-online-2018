@@ -97,8 +97,6 @@ public class CPlayWesternTownScene : MonoBehaviour {
 		this.DrawACard ();
 		// CHECK WIN OR LOSE
 		this.CheckWinOrLose();
-		// Update bomb
-		this.UpdateBombInGame(null);
 	}
 
 	protected virtual void UpdatePlayer(object obj) {
